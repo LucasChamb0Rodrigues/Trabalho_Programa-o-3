@@ -215,17 +215,17 @@ public class Program
         }
 
         // Filtros opcionais
-        if (dto.DataCadastroInicial > DateTime.MinValue)
-            query = query.Where(x => x.DataCadastro >= dto.DataCadastroInicial);
+        if (dto.DataCadastroInicial.HasValue)
+            query = query.Where(x => x.DataCadastro >= dto.DataCadastroInicial.Value.Date);
 
-        if (dto.DataCadastroFinal < DateTime.MaxValue)
-            query = query.Where(x => x.DataCadastro < dto.DataCadastroFinal.Date.AddDays(1)); // inclui o dia inteiro
+        if (dto.DataCadastroFinal.HasValue)
+            query = query.Where(x => x.DataCadastro < dto.DataCadastroFinal.Value.Date.AddDays(1)); // inclui o dia inteiro
 
-        if (dto.DataAtualizacaoInicial > DateTime.MinValue)
-            query = query.Where(x => x.DataAtualizacao >= dto.DataAtualizacaoInicial);
+        if (dto.DataAtualizacaoInicial.HasValue)
+            query = query.Where(x => x.DataAtualizacao >= dto.DataAtualizacaoInicial.Value.Date);
 
-        if (dto.DataAtualizacaoFinal < DateTime.MaxValue)
-            query = query.Where(x => x.DataAtualizacao < dto.DataAtualizacaoFinal.Date.AddDays(1)); // inclui o dia inteiro
+        if (dto.DataAtualizacaoFinal.HasValue)
+            query = query.Where(x => x.DataAtualizacao < dto.DataAtualizacaoFinal.Value.Date.AddDays(1)); // inclui o dia inteiro
 
         //ordenar sempre do mais recente para o mais antigo
         if (dto.Direcao.ToUpper() != "ASC" && dto.Direcao.ToUpper() != "DESC")

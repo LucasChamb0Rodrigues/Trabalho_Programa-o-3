@@ -31,13 +31,13 @@ public sealed class LembreteQueryDTO
         
         public string Descricao { get; set; } = string.Empty;
         
-        public DateTime DataCadastroInicial { get; set; } = DateTime.MinValue;
-        
-        public DateTime DataCadastroFinal { get; set; } = DateTime.MinValue;
+        public DateTime? DataCadastroInicial { get; set; }
 
-        public DateTime DataAtualizacaoInicial { get; set; } = DateTime.MaxValue;
+        public DateTime? DataCadastroFinal { get; set; }
 
-        public DateTime DataAtualizacaoFinal { get; set; } = DateTime.MaxValue;
+        public DateTime? DataAtualizacaoInicial { get; set; }
+
+        public DateTime? DataAtualizacaoFinal { get; set; }
     }
 
     public sealed class LembreteQueryResponseDTO
