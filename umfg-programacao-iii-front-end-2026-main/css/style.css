@@ -166,9 +166,13 @@ select:focus {
 
 .filtro {
     display: grid;
-    grid-template-columns: 1fr 200px auto;
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     align-items: end;
+}
+
+.filtro-descricao {
+    grid-column: span 2;
 }
 
 .btn {
@@ -359,6 +363,13 @@ tbody tr:last-child td {
     z-index: 10;
 }
 
+@media (max-width: 900px) {
+
+    .filtro {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
 
     .container {
@@ -385,6 +396,10 @@ tbody tr:last-child td {
 
     .filtro {
         grid-template-columns: 1fr;
+    }
+
+    .filtro-descricao {
+        grid-column: auto;
     }
 
     table {

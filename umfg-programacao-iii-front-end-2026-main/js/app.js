@@ -22,6 +22,10 @@ const mensagemVazia = document.getElementById("mensagemVazia");
 
 const filtroDescricao = document.getElementById("filtroDescricao");
 const tamanhoPagina = document.getElementById("tamanhoPagina");
+const filtroDataCadastroInicial = document.getElementById("filtroDataCadastroInicial");
+const filtroDataCadastroFinal = document.getElementById("filtroDataCadastroFinal");
+const filtroDataAtualizacaoInicial = document.getElementById("filtroDataAtualizacaoInicial");
+const filtroDataAtualizacaoFinal = document.getElementById("filtroDataAtualizacaoFinal");
 
 const totalRegistros = document.getElementById("totalRegistros");
 const paginaAtualElemento = document.getElementById("paginaAtual");
@@ -50,25 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // ========================================
 async function filtrarLembretes() {
     try {
-        const dataAtual = new Date();
-        const dataFormatada = dataAtual.getFullYear() + "-" +
-            String(dataAtual.getMonth() + 1).padStart(2, "0") + "-" +
-            String(dataAtual.getDate()).padStart(2, "0");
+        const params = montarParametros();
 
-        const params = new URLSearchParams();
-
-        params.append("NumeroPagina", paginaAtual);
-        params.append("TamanhoPagina", tamanhoPagina.value);
-        params.append("Descricao", filtroDescricao.value);
-
-        /*TODO: implementar todos os filtros no html*/
-        params.append("Ordem", "DataCadastro");
-        params.append("Direcao", "DESC");
-        params.append("DataCadastroInicial", dataFormatada);
-        params.append("DataCadastroFinal", dataFormatada);
-        params.append("DataAtualizacaoInicial", dataFormatada);
-        params.append("DataAtualizacaoFinal", dataFormatada);
-        
         console.log('filtro-> params', params);
 
         const response = await fetch(
@@ -110,24 +97,7 @@ async function filtrarLembretes() {
 // ========================================
 async function imprimirLembretes() {
     try {
-        const dataAtual = new Date();
-        const dataFormatada = dataAtual.getFullYear() + "-" +
-            String(dataAtual.getMonth() + 1).padStart(2, "0") + "-" +
-            String(dataAtual.getDate()).padStart(2, "0");
-
-        const params = new URLSearchParams();
-
-        params.append("NumeroPagina", paginaAtual);
-        params.append("TamanhoPagina", tamanhoPagina.value);
-        params.append("Descricao", filtroDescricao.value);
-
-        /*TODO: implementar todos os filtros no html*/
-        params.append("Ordem", "DataCadastro");
-        params.append("Direcao", "DESC");
-        params.append("DataCadastroInicial", dataFormatada);
-        params.append("DataCadastroFinal", dataFormatada);
-        params.append("DataAtualizacaoInicial", dataFormatada);
-        params.append("DataAtualizacaoFinal", dataFormatada);
+        const params = montarParametros();
 
         const response = await fetch(
             `${API_URL}/lembretes/imprimir?${params}`
@@ -481,6 +451,34 @@ btnProximo.addEventListener("click", () => {
 // ========================================
 // UTILITÁRIOS
 // ========================================
+function montarParametros() {
+    const params = new URLSearchParams();
+
+    params.append("NumeroPagina", paginaAtual);
+    params.append("TamanhoPagina", tamanhoPagina.value);
+    params.append("Descricao", filtroDescricao.value);
+    params.append("Ordem", "DataCadastro");
+    params.append("Direcao", "DESC");
+
+    if (filtroDataCadastroInicial.value) {
+        params.append("DataCadastroInicial", filtroDataCadastroInicial.value);
+    }
+
+    if (filtroDataCadastroFinal.value) {
+        params.append("DataCadastroFinal", filtroDataCadastroFinal.value);
+    }
+
+    if (filtroDataAtualizacaoInicial.value) {
+        params.append("DataAtualizacaoInicial", filtroDataAtualizacaoInicial.value);
+    }
+
+    if (filtroDataAtualizacaoFinal.value) {
+        params.append("DataAtualizacaoFinal", filtroDataAtualizacaoFinal.value);
+    }
+
+    return params;
+}
+
 function formatarData(data) {
 
     if (!data) {
