@@ -282,6 +282,10 @@ td {
     font-size: 15px;
 }
 
+td:first-child {
+    min-width: 220px;
+}
+
 td:nth-child(2),
 td:nth-child(3) {
     color: var(--texto-suave);
