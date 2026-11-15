@@ -232,7 +232,16 @@ public class Program
             dto.Direcao = "DESC";
 
         //ordenação
-        query = dto.Direcao.ToUpper() == "DESC" ? query.OrderByDescending(x => dto.Ordem) : query.OrderBy(x => dto.Ordem);
+        var descendente = dto.Direcao.ToUpper() == "DESC";
+
+        IOrderedQueryable<Lembrete> queryOrdenada = dto.Ordem.ToLower() switch
+        {
+            "descricao" => descendente ? query.OrderByDescending(x => x.Descricao) : query.OrderBy(x => x.Descricao),
+            "dataatualizacao" => descendente ? query.OrderByDescending(x => x.DataAtualizacao) : query.OrderBy(x => x.DataAtualizacao),
+            _ => descendente ? query.OrderByDescending(x => x.DataCadastro) : query.OrderBy(x => x.DataCadastro)
+        };
+
+        query = queryOrdenada.ThenBy(x => x.Id);
 
         // paginação
         var pular = (dto.NumeroPagina - 1) * dto.TamanhoPagina;
